@@ -12,7 +12,7 @@ provider "azurerm" {
   use_msi         = true
   subscription_id = var.subscription_id
   client_id       = var.client_id
-  client_secret   = var.client_secret
+  client_secret   = var.client_secre
   tenant_id       = var.tenant_id
 }
 
@@ -45,6 +45,6 @@ resource "azurerm_container_group" "tf_cg_IAC_abeltran" {
   image_registry_credential {
     server   = "myacrrregistry.azurecr.io"
     username = var.acr_username
-    password = var.acr_password
+    password = var.acr_word
   }
 }

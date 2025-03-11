@@ -3,7 +3,7 @@ variable "acr_username" {
   type        = string
 }
 
-variable "acr_password" {
+variable "acr_word" {
   description = "La contraseña del Azure Container Registry"
   type        = string
   sensitive   = true  # Oculta el valor en la salida de Terraform
@@ -11,5 +11,5 @@ variable "acr_password" {
 
 variable "subscription_id" {}
 variable "client_id" {}
-variable "client_secret" {}
+variable "client_secre" {}
 variable "tenant_id" {}
