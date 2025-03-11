@@ -398,3 +398,15 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+#Terraform
+# Ignorar archivos temporales
+*.terraform*
+.terraform.lock.hcl
+
+# Ignorar tfstate local si usas almacenamiento remoto
+terraform.tfstate*
+terraform.tfstate.backup*
+
+# Mantener los planes de Terraform
+!tfplan-*
