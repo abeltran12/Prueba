@@ -10,10 +10,10 @@ terraform {
 provider "azurerm" {
   features {}
   use_msi         = true
-  subscription_id = "ef9c2453-b11a-4ba2-8495-012c166910d2"
-  client_id       = "d4401217-8d22-4771-8963-9006d0b362f2"
-  client_secret   = "-dP8Q~b9RU2tyMkwIG2S.xLmq~eYspI6ynzDEa-0"
-  tenant_id       = "e37b53b0-215c-48b7-ad84-69a26c44f71d"
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
 }
 
 resource "azurerm_resource_group" "AndresDocker" {
@@ -44,7 +44,7 @@ resource "azurerm_container_group" "tf_cg_IAC_abeltran" {
 
   image_registry_credential {
     server   = "myacrrregistry.azurecr.io"
-    username = "d4401217-8d22-4771-8963-9006d0b362f2"  # ID del Service Principal
-    password = "-dP8Q~b9RU2tyMkwIG2S.xLmq~eYspI6ynzDEa-0"  # Secret del Service Principal
+    username = var.acr_username
+    password = var.acr_password
   }
 }
