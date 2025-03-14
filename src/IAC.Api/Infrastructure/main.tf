@@ -32,7 +32,7 @@ resource "azurerm_container_group" "tf_cg_IAC_abeltran" {
 
   container {
     name   = "iacabortiz"
-    image  = "myacrregistryabo.azurecr.io/abeltran12/iac"
+    image  = "myacrregistryabo.azurecr.io/iac"
     cpu    = 1.0
     memory = 1.0
 
@@ -43,8 +43,8 @@ resource "azurerm_container_group" "tf_cg_IAC_abeltran" {
   }
 
   image_registry_credential {
-    server   = "myacrrregistry.azurecr.io"
-    username = var.acr_username
-    password = var.acr_password
+    server   = "myacrregistryabo.azurecr.io"
+    username = var.client_id  # ID del Service Principal
+    password = var.client_secret  # Secret del Service Principal
   }
 }
