@@ -32,7 +32,7 @@ resource "azurerm_container_group" "tf_cg_IAC_abeltran" {
 
   container {
     name   = "iacabortiz"
-    image  = "myacrrregistry.azurecr.io/abeltran12/iac"
+    image  = "myacrregistryabo.azurecr.io/abeltran12/iac"
     cpu    = 1.0
     memory = 1.0
 
