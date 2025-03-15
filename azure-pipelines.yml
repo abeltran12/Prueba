@@ -25,7 +25,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         tags: |
-          $(Build.BuildId)-main-$(buildTag)
+          $(buildTag)
 
     - task: Docker@2
       displayName: Push Docker image to Docker Hub
@@ -33,5 +33,5 @@ stages:
         command: push
         repository: $(imageRepository)
         tags: |
-          $(Build.BuildId)-main-$(buildTag)
+          $(buildTag)
         containerRegistry: $(dockerHubServiceConnection)
