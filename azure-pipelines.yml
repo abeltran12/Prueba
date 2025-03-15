@@ -5,7 +5,7 @@ variables:
   dockerHubServiceConnection: 'dockerhub'  # Debes configurar esto en Azure DevOps
   imageRepository: 'abeltran12/iac'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)-$(Build.SourceBranchName)-$(Build.Repository.Name)-$(Date:yyyyMMdd.HHmm)'
+  buildTag: $(Build.BuildId)
 
   vmImageName: 'ubuntu-latest'
 
@@ -25,8 +25,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         tags: |
-          latest
-          $(tag)
+          $(Build.BuildId)-main-$(buildTag)
 
     - task: Docker@2
       displayName: Push Docker image to Docker Hub
@@ -34,6 +33,5 @@ stages:
         command: push
         repository: $(imageRepository)
         tags: |
-          latest
-          $(tag)
+          $(Build.BuildId)-main-$(buildTag)
         containerRegistry: $(dockerHubServiceConnection)
