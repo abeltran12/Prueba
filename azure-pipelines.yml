@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  dockerHubServiceConnection: 'docker-hub-connection-id'  # Debes configurar esto en Azure DevOps
+  dockerHubServiceConnection: 'dockerhub'  # Debes configurar esto en Azure DevOps
   imageRepository: 'abeltran12/iac'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)-$(Build.SourceBranchName)-$(Build.Repository.Name)-$(Date:yyyyMMdd.HHmm)'
