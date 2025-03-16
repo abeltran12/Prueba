@@ -16,6 +16,15 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name = "AndresDocker"
+    storage_account_name = "andresstorage12"
+    container_name = "containerblob"
+    key = "terraform.tfstate"
+  }
+}
+
 resource "azurerm_resource_group" "AndresDocker" {
   name     = "AndresDocker"
   location = "eastus"
