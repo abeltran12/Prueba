@@ -45,7 +45,7 @@ stages:
       inputs:
         terraformVersion: 'latest'
       variables:
-      - group: TF_Sample_Library
+        - group: TF_Sample_Library
     - script: |
         terraform init \
           -backend-config="storage_account_name=$(storageAccountName)" \
