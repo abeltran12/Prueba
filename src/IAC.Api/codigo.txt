@@ -1,0 +1,62 @@
+trigger:
+  - main
+
+variables:
+  dockerHubServiceConnection: 'dockerhub'  # Debes configurar esto en Azure DevOps
+  imageRepository: 'abeltran12/iac'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  buildTag: $(Build.BuildId)
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build Docker Image
+  jobs:
+  - job: Build
+    displayName: Build Docker Image
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and tag Docker image
+      inputs:
+        command: build
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        tags: |
+          $(buildTag)
+
+    - task: Docker@2
+      displayName: Push Docker image to Docker Hub
+      inputs:
+        command: push
+        repository: $(imageRepository)
+        tags: |
+          $(buildTag)
+        containerRegistry: $(dockerHubServiceConnection)
+
+- stage: Provision
+  displayName: 'Terraform on Azure'
+  dependsOn: Build
+  jobs:
+  - job: Provision
+    displayName: 'Provision Container Instance'
+    pool:
+      vmImage: $(vmImageName)
+    variables:
+      - group: TF_Sample_Library  # Asegúrate de que este grupo existe en Azure DevOps
+    steps:
+    - script: |
+        terraform init \
+          -backend-config="storage_account_name=$(storageAccountName)" \
+          -backend-config="container_name=$(containerName)" \
+          -backend-config="key=$(key)" \
+          -backend-config="access_key=$(accessKey)"
+
+        terraform apply -input=false -auto-approve
+      displayName: 'Run Terraform'
+      env:
+        ARM_CLIENT_ID: $(client_id)
+        ARM_CLIENT_SECRET: $(client_secret)
+        ARM_SUBSCRIPTION_ID: $(subscription_id)
+        ARM_TENANT_ID: $(tenant_id)      
