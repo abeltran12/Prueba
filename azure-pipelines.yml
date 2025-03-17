@@ -1,12 +1,11 @@
 trigger:
-- main
+  - main
 
 variables:
   dockerHubServiceConnection: 'dockerhub'  # Debes configurar esto en Azure DevOps
   imageRepository: 'abeltran12/iac'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   buildTag: $(Build.BuildId)
-
   vmImageName: 'ubuntu-latest'
 
 stages:
@@ -35,3 +34,27 @@ stages:
         tags: |
           $(buildTag)
         containerRegistry: $(dockerHubServiceConnection)
+
+- stage: Provision
+  displayName: 'Terraform on Azure'
+  dependsOn: Build
+  jobs:
+  - job: Provision
+    displayName: 'Provision Container Instance'
+    pool:
+      vmImage: $(vmImageName)
+    variables:
+      - group: TF_Sample_Library  # Asegúrate de que este grupo existe en Azure DevOps
+    steps:
+    - script: |
+        set -e
+        terraform init -input=false
+        terraform apply -input=false -auto-approve
+      displayName: 'Run Terraform'
+      env:
+        ACR_USERNAME: $(acr_username)
+        ACR_PASSWORD: $(acr_password)
+        SUBSCRIPTION_ID: $(subscription_id)
+        CLIENT_ID: $(client_id)
+        CLIENT_SECRET: $(client_secret)
+        TENANT_ID: $(tenant_id)

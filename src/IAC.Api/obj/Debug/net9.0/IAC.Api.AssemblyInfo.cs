@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IAC.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54681f95763c22db5b76800e1f4c1de6757362c4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+69b66fbf3cab062d7efa8333737f50e6d1cf7b7b")]
 [assembly: System.Reflection.AssemblyProductAttribute("IAC.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IAC.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

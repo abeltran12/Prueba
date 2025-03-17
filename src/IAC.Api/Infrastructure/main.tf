@@ -18,10 +18,10 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name = "AndresDocker"
+    resource_group_name  = "AndresDocker"
     storage_account_name = "andresstorage12"
-    container_name = "containerblob"
-    key = "terraform.tfstate"
+    container_name       = "containerblob"
+    key                  = "terraform.tfstate"
   }
 }
 
@@ -53,7 +53,7 @@ resource "azurerm_container_group" "tf_cg_IAC_abeltran" {
 
   image_registry_credential {
     server   = "myacrregistryabo.azurecr.io"
-    username = var.client_id  # ID del Service Principal
-    password = var.client_secret  # Secret del Service Principal
+    username = var.client_id     # ID del Service Principal
+    password = var.client_secret # Secret del Service Principal
   }
 }
