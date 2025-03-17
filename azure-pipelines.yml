@@ -16,9 +16,9 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'latest'
-
+      variables:
+        - group: TF_Sample_Library
     - script: |
-        cd infra  # Ajusta según tu estructura de carpetas
         terraform init \
           -backend-config="storage_account_name=$(storageAccountName)" \
           -backend-config="container_name=$(containerName)" \
@@ -44,9 +44,9 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: 'latest'
-
+      variables:
+      - group: TF_Sample_Library
     - script: |
-        cd infra  # Ajusta si los archivos están en una carpeta diferente
         terraform init \
           -backend-config="storage_account_name=$(storageAccountName)" \
           -backend-config="container_name=$(containerName)" \
