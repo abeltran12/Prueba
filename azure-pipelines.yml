@@ -34,29 +34,17 @@ stages:
         tags: |
           $(buildTag)
         containerRegistry: $(dockerHubServiceConnection)
-
-- stage: Provision
-  displayName: 'Terraform on Azure'
-  dependsOn: Build
-  jobs:
-  - job: Provision
-    displayName: 'Provision Container Instance'
-    pool:
-      vmImage: $(vmImageName)
-    variables:
-      - group: TF_Sample_Library  # Asegúrate de que este grupo existe en Azure DevOps
-    steps:
-    - script: |
-        terraform init \
-          -backend-config="storage_account_name=$(storageAccountName)" \
-          -backend-config="container_name=$(containerName)" \
-          -backend-config="key=$(key)" \
-          -backend-config="access_key=$(accessKey)"
-
-        terraform apply -input=false -auto-approve
-      displayName: 'Run Terraform'
-      env:
-        ARM_CLIENT_ID: $(client_id)
-        ARM_CLIENT_SECRET: $(client_secret)
-        ARM_SUBSCRIPTION_ID: $(subscription_id)
-        ARM_TENANT_ID: $(tenant_id)      
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'terraform'
+        backendAzureRmResourceGroupName: 'AndresDocker'
+        backendAzureRmStorageAccountName: 'andresstorage12'
+        backendAzureRmContainerName: 'containerblob'
+        backendAzureRmKey: 'terraform.tfstate'
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        environmentServiceNameAzureRM: 'terraform'
